@@ -18,7 +18,7 @@ class GaesteBuchType extends AbstractType
             ->add('username',TextType::class,['empty_data' => ''])
             ->add('subtitle',TextType::class,['empty_data' => ''])
             ->add('body',TextType::class,['empty_data' => ''])
-            ->add('email',TextType::class,['empty_data' => ''])
+            ->add('email',TextType::class,['required' => false])
             ->add('submit',SubmitType::class)
         ;
     }
