@@ -15,10 +15,10 @@ class GaesteBuchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username',TextType::class,['empty_data' => ''])
-            ->add('subtitle',TextType::class,['empty_data' => ''])
-            ->add('body',TextType::class,['empty_data' => ''])
-            ->add('email',TextType::class,['required' => false])
+            ->add('username',TextType::class,['empty_data' => '', 'label' => 'Name'])
+            ->add('subtitle',TextType::class,['empty_data' => '', 'label' => 'Titel'])
+            ->add('body',TextType::class,['empty_data' => '', 'label' => 'Eintrag'])
+            ->add('email',TextType::class,['required' => false, 'label' => 'E-mail'])
             ->add('submit',SubmitType::class)
         ;
     }

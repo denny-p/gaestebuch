@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\GaesteBuchEntityRepository;
-use Doctrine\DBAL\Types\Types;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,26 +12,32 @@ class GaesteBuchEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: "integer")]
     private ?int $id = null;
     
+    #[ORM\Column(type: "datetime_immutable",options:["default" => "CURRENT_TIMESTAMP"])]
+    private DateTimeImmutable $createdAt;
+
     #[Assert\NotBlank]
-    #[ORM\Column(length: 255)]
+    #[Assert\Length(max:255)]
+    #[ORM\Column(type: "string",length: 255)]    
     private ?string $username = null;
 
     #[Assert\NotBlank]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: "string",length: 255)] 
     private ?string $subtitle = null;
 
     #[Assert\NotBlank]
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: "text")]
     private ?string $body = null;
 
     #[Assert\Email]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
-    public function __construct(private \DateTimeImmutable $createdAt){}
+    public function __construct(){
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
