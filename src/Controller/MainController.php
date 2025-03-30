@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 final class MainController extends AbstractController
 {
 
-    public function __construct(private readonly GaesteBuchEntityRepository $repository)
+    public function __construct(private readonly int $limit, private readonly GaesteBuchEntityRepository $repository)
     {
 
 
@@ -35,16 +35,32 @@ final class MainController extends AbstractController
             return $this->redirectToRoute('index');
         }      
         
-        $entries = $this->repository->findBy([],['createdAt' => 'DESC']);
+        
+        $maxPages = $this->getMaxPages($this->limit);
+        $currentPage = $this->getCurrentPages($request, $maxPages);
+
+        $entries = $this->repository->getPaginatedEntries($this->limit, $currentPage);
         
         return $this->render('main/index.html.twig', [
             'gaesteBuchForm' => $form,
             'entries' => $entries,
-
+            'maxPages' => $maxPages,
+            'currentPage' => $currentPage,
         ]);
     }
 
 
-   
+    private function getMaxPages(int $limit): int{
+
+        $totalEntries = $this->repository->count([]);
+
+        return (int) ceil($totalEntries/$limit);
+
+    }
+
+    private function getCurrentPages(Request $request, int $maxPages): int{
+        $page = (int) $request->get('page',1);
+        return min(max($page,1),$maxPages);
+    }
 
 }

@@ -14,25 +14,13 @@
 
 <div class="container">
 <h1>Gästebuch</h1>
-{% for label, messages in app.flashes %}
-    {% for message in messages %}
-    <div class="alert alert-{{ label }} d-flex align-items-center" role="alert">
-        <div>{{ message }}</div>
-    </div>
-    {% endfor %}
-{% endfor %}
-
+{% include 'messages.html.twig' %}
 {{ form(gaesteBuchForm) }}
   
 {% for entry in entries %}
-<div class="card mb-3">
-    <div class="card-body">
-        <h5 class="card-title">{{ entry.subtitle }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">von {{ entry.username }} am {{ entry.createdAt|date('d.m.Y H:i:s') }}</h6>        
-        <p class="card-text">{{ entry.body }}</p>        
-    </div>
-</div>
+{% include 'main/entry.html.twig' %}
 {% endfor %}        
 
+{% include 'main/pagination.html.twig' %}
 </div>
 {% endblock %}

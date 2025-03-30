@@ -28,29 +28,11 @@ class GaesteBuchEntityRepository extends ServiceEntityRepository
     }
 
 
+    public function getPaginatedEntries(int $limit, int $page): array{
+        $offset = ($page - 1) * $limit;
+        $entries = $this->findBy([],['createdAt' => 'DESC'],$limit,$offset);
 
-//    /**
-//     * @return GaesteBuchEntity[] Returns an array of GaesteBuchEntity objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('g.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        return $entries;
+    }
 
-//    public function findOneBySomeField($value): ?GaesteBuchEntity
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
