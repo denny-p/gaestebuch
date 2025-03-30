@@ -16,6 +16,19 @@ class GaesteBuchEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, GaesteBuchEntity::class);
     }
 
+
+    public function add(GaesteBuchEntity $gaesteBuchEntity){
+
+        $manager = $this->getEntityManager();
+        $manager->persist($gaesteBuchEntity);
+
+    }
+    public function flush(){
+        $this->getEntityManager()->flush();
+    }
+
+
+
 //    /**
 //     * @return GaesteBuchEntity[] Returns an array of GaesteBuchEntity objects
 //     */
