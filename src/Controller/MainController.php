@@ -6,10 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\GaesteBuchType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final class MainController extends AbstractController
 {
+
+    public function __construct(private readonly EntityManagerInterface $em)
+    {
+
+
+    }
+
     #[Route('/', name: 'index')]
     public function index(Request $request): Response
     {
@@ -21,7 +29,10 @@ final class MainController extends AbstractController
         if($form->isSubmitted()){
 
             $data = $form->getData();
-            dump($data);
+            $this->em->persist($data);
+            $this->em->flush();
+            return $this->redirectToRoute('index');
+
 
         }
 
