@@ -29,7 +29,7 @@ class GaesteBuchEntityRepository extends ServiceEntityRepository
 
 
     public function getPaginatedEntries(int $limit, int $page): array{
-        $offset = ($page - 1) * $limit;
+        $offset = $page > 0 ? ($page - 1) * $limit : 0;
         $entries = $this->findBy([],['createdAt' => 'DESC'],$limit,$offset);
 
         return $entries;
