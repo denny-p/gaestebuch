@@ -28,6 +28,8 @@ class GaesteBuchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => GaesteBuchEntity::class,
+            'csrf_protection' => true,
+            'csrf_token_id' => 'gbook_item'
         ]);
     }
 }
